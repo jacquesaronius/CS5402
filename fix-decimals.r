@@ -7,6 +7,9 @@ for(i in 1:ncol(df))
 {
     for (j in 1:nrow(df))
     {
+        if (sapply(df[i], class) != "numeric") {
+            next();
+        }
         if (j > 1 & j < nrow(df))
         {
             if (!is.na(df[j, i]))
