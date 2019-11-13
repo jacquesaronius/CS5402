@@ -2,7 +2,7 @@
 setwd("~/College/FS19/CS5402/HW07P")
 df<-read.csv("editeddata.csv",header = TRUE,sep = ",")
 
-for(i in 1:33)
+for(i in 1:53)
 {
   final_na_count = 0
   fix_count = 0
@@ -46,9 +46,12 @@ for(i in 1:33)
 
 ### remove remaining NAs in this section
 #I only assign the data so many times so i can compare it to the previous version (so not necessary to keep)
-data <- df
-summary(data[,22:27])
-for(i in 22:27){
+data<-df
+for(i in 1:53){
+  if(sapply(data[i], class) == "numeric") {
+    next
+  }
+  
   for(j in 1:nrow(data)){
     if(is.na(data[j,i])){
       if(j > 1){
@@ -63,13 +66,23 @@ for(i in 22:27){
     }
   }
 }
-summary(data[,22:27])
+
+##FIX TYPO
+for(j in 1:nrow(data)){
+  if(data[j,24] == "ALMOST_CLOSD"){
+    data[j,24] = "ALMOST_CLOSED"
+  }
+}
+
 ###REMOVE ERRORS ###
 #4045,8302,12118,13978
 mv <- data
-summary(data[,22:27])
+# summary(data[,22:27])
 
-for(i in 22:27){
+for(i in 1:53){
+  if(sapply(df[i], class) == "numeric") {
+    next();
+  }
   previous = ""
   for(j in 1:nrow(mv)){
     ### CLOSED ###
@@ -200,4 +213,4 @@ for(i in 22:27){
   }
 }
 
-summary(mv[,22:27])
+# summary(mv[,22:27])
