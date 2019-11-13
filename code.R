@@ -1,5 +1,52 @@
-#remove remaining NAs in this section
-data<-read.csv("editeddata.csv",header = TRUE,sep = ",")
+### THIS SECTIONS JUST A COPY OF YOUR CODE ###
+setwd("~/College/FS19/CS5402/HW07P")
+df<-read.csv("editeddata.csv",header = TRUE,sep = ",")
+
+for(i in 1:33)
+{
+  final_na_count = 0
+  fix_count = 0
+  for (j in 1:nrow(df))
+  {
+    if (j > 1 & j < nrow(df))
+    {
+      na_count = 0
+      next_value = ""
+      if (is.na(df[j, i]))
+      {
+        print(paste0("Found NA: [", i, " , ",j, "]"))
+        na_count = 1
+        while (is.na(df[j + na_count, i]))
+        {
+          na_count = na_count + 1
+        }
+        
+        next_value = df[j + na_count, i]
+        
+        if (!is.na(df[j - 1, i]))
+        {
+          if (df[j - 1, i] == next_value)
+          {
+            for (k in 0:na_count - 1)
+            {
+              df[j + k, i] = next_value
+              fix_count = fix_count + 1
+            }
+          }
+          else
+          {
+            print("-- Previous and next values don't match -- skipping\n")
+          }
+        }
+        final_na_count = final_na_count + na_count
+      }
+    }
+  }
+}
+
+### remove remaining NAs in this section
+#I only assign the data so many times so i can compare it to the previous version (so not necessary to keep)
+data <- df
 summary(data[,22:27])
 for(i in 22:27){
   for(j in 1:nrow(data)){
@@ -17,7 +64,7 @@ for(i in 22:27){
   }
 }
 summary(data[,22:27])
-
+###REMOVE ERRORS ###
 #4045,8302,12118,13978
 mv <- data
 summary(data[,22:27])
