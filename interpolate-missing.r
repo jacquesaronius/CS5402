@@ -1,23 +1,22 @@
-#options(error = quote({
-#        dump.frames(to.file=T, dumpto='last.dump')
-#        load('last.dump.rda')
-#        print(last.dump)
-#         q()
-#    }))
 args = commandArgs(trailingOnly=TRUE)
 d = read.csv(args[1])
+#d = read.csv("5402_dataset.csv")
 df = data.frame(d)
 cat("Read in CSV file\n")
+final_na_count = 0
+fix_count = 0
 for(i in 1:ncol(df))
 {
-    final_na_count = 0
-    fix_count = 0
+    if (sapply(df[i], class) != "numeric") {
+        next();
+    }
     for (j in 1:nrow(df))
     {
         if (j > 1 & j < nrow(df))
         {
             na_count = 0
-            next_value = ""
+            next_value = 0
+            prev_value = 0
             if (is.na(df[j, i]))
             {
                 if (length(args) > 1) {
@@ -29,25 +28,17 @@ for(i in 1:ncol(df))
                     na_count = na_count + 1
                 }
 
+                prev_value = df[j - 1, i]
                 next_value = df[j + na_count, i]
 
-                if (!is.na(df[j - 1, i]))
+                avg = (next_value + prev_value) / 2
+
+                for (k in 0:na_count - 1)
                 {
-                    if (df[j - 1, i] == next_value)
-                    {
-                        for (k in 0:na_count - 1)
-                        {
-                            df[j + k, i] = next_value
-                            fix_count = fix_count + 1
-                        }
-                    }
-                    else
-                    {
-                        if (length(args) > 1) {
-                            print("-- Previous and next values don't match -- skipping\n")
-                        }
-                    }
+                    df[j + k, i] = avg
+                    fix_count = fix_count + 1
                 }
+                j = j + na_count - 1
                 final_na_count = final_na_count + na_count
             }
         }
