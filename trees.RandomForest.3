@@ -1,0 +1,69 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.trees.RandomForest -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+Relation:     hw8_data
+Instances:    14996
+Attributes:   38
+              is_attack
+              P101
+              P203
+              P205
+              P301
+              P401
+              P601
+              MV301
+              MV302
+              MV304
+              UV401
+              MV101
+              MV201
+              MV303
+              FIT101
+              LIT101
+              AIT202
+              AIT203
+              FIT201
+              DPIT301
+              FIT301
+              LIT301
+              AIT402
+              FIT401
+              LIT401
+              AIT501
+              AIT502
+              AIT503
+              AIT504
+              FIT501
+              FIT502
+              FIT503
+              FIT504
+              PIT501
+              PIT502
+              PIT503
+              FIT601
+              AIT201
+Test mode:    split 66.0% train, remainder test
+
+=== Classifier model (full training set) ===
+
+RandomForest
+
+Bagging with 100 iterations and base learner
+
+weka.classifiers.trees.RandomTree -K 0 -M 1.0 -V 0.001 -S 1 -do-not-check-capabilities
+
+Time taken to build model: 2.97 seconds
+
+=== Evaluation on test split ===
+
+Time taken to test model on test split: 0.13 seconds
+
+=== Summary ===
+
+Correlation coefficient                  0.9946
+Mean absolute error                      0.0063
+Root mean squared error                  0.0351
+Relative absolute error                  2.8084 %
+Root relative squared error             10.5339 %
+Total Number of Instances             5099     
+
